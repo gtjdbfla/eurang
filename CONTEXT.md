@@ -13,14 +13,19 @@
 ## 서버에서 이미 있는 다른 소설 프로젝트의 구조 (참고)
 
 - `~/fullmetal_alchemist`, `~/religion_novel`: Caddy 정적 사이트(`site/`) + `scripts/build_views.py`가 `author-site/`를 생성, Funnel 10000의 경로(`/east`, `/religion`)로 공개, 수동 `./deploy.sh`.
-- `eurang`의 대시보드 방식은 아직 정해지지 않았다.
+
+## 대시보드 (2026-11-11 구축)
+
+- 다른 소설과 같은 방식으로 결정: Markdown 정본 + `scripts/build_views.py` → `site/data/project.json` + Caddy 정적 사이트. 원안의 Next.js/FastAPI/SQLite는 쓰지 않는다(서버에 Node 없음, MVP 후 집필 우선). 브라우저 편집 대신 집필 Claude가 파일을 고친다.
+- 주소 `https://yulmserver.tail261e6c.ts.net:10000/eurang/`, 컨테이너 `eurang-novel`(127.0.0.1:8103), 망상연구소 홈(`~/macro-flow-dashboard/home`)에 06번 카드 추가.
+- 처음엔 basic_auth를 걸었으나 사용자 요청으로 2026-11-11 해제했다(누구나 URL로 열람 가능, 19금 자료). 다시 걸 때 쓸 해시는 `.env`, 평문은 `secrets/basic_auth.txt`에 남아 있다.
+- 메뉴 7개: 홈 · 여행썰 보관함 · 에피소드 보드(실제/소설 나란히) · 원고(글자 수·이전 버전 비교·노벨피아 복사) · 인물·설정집(+동선) · AI 검수실(역할 지침+검수 기록) · 연재 관리(`content/publishing.json` 수동 기록).
+- 반영: `./deploy.sh` (자동 cron 배포는 아직 없음).
 
 ## 아직 정해지지 않은 것 (사용자 결정 필요)
 
-1. **대시보드 구조**: 기획 원안(Next.js + FastAPI + SQLite, 7개 메뉴)을 그대로 만들지, 다른 소설처럼 가벼운 정적 사이트(Markdown 중심)로 시작할지. 원안은 규모가 커서 서버(Intel N100, 메모리 여유 약 9GB)에 Node 빌드 환경이 없다는 점도 감안해야 한다.
-2. **공개 범위**: 이 작품은 19금이고 개인 집필 자료라서 Tailscale Funnel(인터넷 공개) 대신 **tailnet/LAN 전용**으로 둘지, 비밀번호(basic_auth)를 걸지.
-3. **착수 순서**: 대시보드 MVP를 먼저 만들지, `content/` 폴더에 설정·플롯부터 정리하고 집필을 먼저 시작할지.
-4. 작품 제목 확정 여부(현재 가제), 연재 분량·회차당 글자 수 기준(다른 소설은 7,000자 권장·9,000자 허용이었음 — 이 작품에도 적용할지).
+1. EP01 회차 구성(1화 단편/2화), 주인공·인물 가명, 옴니버스 연결 방식 — 집필 착수 전에 정한다.
+2. 작품 제목 확정 여부(현재 가제), 연재 분량·회차당 글자 수 기준(다른 소설은 7,000자 권장·9,000자 허용이었음 — 이 작품에도 적용할지).
 
 ## 작업 규칙
 

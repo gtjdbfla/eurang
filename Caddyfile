@@ -1,0 +1,24 @@
+# 사용자 요청(2026-11-11)으로 비밀번호를 해제했다. 다시 걸려면 basic_auth 블록을 복원한다(해시는 .env의 EURANG_AUTH_HASH).
+:8103 {
+    handle /healthz {
+        respond "ok" 200
+    }
+    redir /eurang /eurang/ 308
+    handle_path /eurang/* {
+        root * /srv
+        file_server
+    }
+    handle {
+        root * /srv
+        file_server
+    }
+    encode gzip zstd
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        X-Frame-Options SAMEORIGIN
+        Cache-Control "no-store"
+        X-Robots-Tag "noindex, nofollow, noarchive"
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+    }
+}
